@@ -21,14 +21,31 @@ var megaRoster = {
     studentList.appendChild(listItem);
     f.reset();
     this.count += 1;
-
     f.studentName.focus();
   },
 
   buildListItem: function(studentName) {
     var listItem = document.createElement('li');
+    var removeLink = this.buildLink({
+      text: 'remove',
+      handler: function() {
+        listItem.remove();
+      }
+    });
+    var promoteLink = this.buildLink('promote');
     listItem.innerText = studentName;
+    listItem.appendChild(removeLink);
+    listItem.appendChild(promoteLink);
+
     return listItem;
   },
+
+  buildLink: function(options) {
+    var link = document.createElement('a');
+    link.href = "#";
+    link.innerText = options.text;
+    link.onclick = options.handler;
+    return link;
+  }
 };
 megaRoster.init();
