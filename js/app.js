@@ -1,26 +1,24 @@
 $(document).foundation()
 
 var megaRoster = {
-  init: function() {
+  init: function(listSelector) {
+    this.studentList = document.querySelector(listSelector);
     this.setupEventListeners();
     this.count = 0;
   },
 
   setupEventListeners: function() {
-    document.querySelector('form#studentForm').onsubmit =
-    this.addStudent.bind(this);
+    document.querySelector('form#studentForm').onsubmit = this.addStudent.bind(this);
   },
-
 
   addStudent: function(ev) {
     ev.preventDefault();
     var f = ev.currentTarget;
     var studentName = f.studentName.value;
     var listItem = this.buildListItem(studentName);
-    var studentList = document.querySelector('#studentList');
-    studentList.appendChild(listItem);
 
-    this.prependChild(studentList, listItem);
+    // studentList.appendChild(listItem);
+    this.prependChild(this.studentList, listItem);
 
     f.reset();
     this.count += 1;
@@ -34,45 +32,30 @@ var megaRoster = {
 
   buildListItem: function(studentName) {
     var listItem = document.createElement('li');
+    listItem.innerText = studentName;
+    this.appendLinks(listItem);
+
+    return listItem;
+  },
+
+  appendLinks: function(listItem) {
+    var span = document.createElement('span');
+    span.className += 'actions'
     var removeLink = this.buildLink({
       text: 'remove',
-      handler: function(){
+      handler: function() {
         listItem.remove();
       }
     });
     var promoteLink = this.buildLink({
       text: 'promote',
-      handler: function(){
-        listItem.style.border = '2px purple dashed';
-        studentList.appendChild(listItem);
+      handler: function() {
+        listItem.style.border = '2px CornflowerBlue dashed';
       }
     });
-    var upLink = this.buildLink({
-      text:'up',
-      handler: function(){
-        listItem.style.border = '2px blue dashed';
-      }
-    });
-    var downLink = this.buildLink({
-      text:'down',
-      handler: function(){
-        listItem.style.border = '2px green dashed';
-      }
-    });
-    var editLink = this.buildLink({
-      text:'edit',
-      handler: function(){
-        listItem.style.border = '2px red dashed';
-      }
-    });
-
-    listItem.innerText = studentName;
     listItem.appendChild(removeLink);
     listItem.appendChild(promoteLink);
-    listItem.appendChild(upLink);
-    listItem.appendChild(downLink);
-    listItem.appendChild(editLink);
-    return listItem;
+    listItem.appendChild(span);
   },
 
   buildLink: function(options) {
@@ -81,6 +64,6 @@ var megaRoster = {
     link.innerText = options.text;
     link.onclick = options.handler;
     return link;
-  }
+  },
 };
-megaRoster.init();
+megaRoster.init('#studentList');
