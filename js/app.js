@@ -44,50 +44,50 @@ var megaRoster = {
     var span = document.createElement('span');
     span.className += 'actions'
     var removeLink = this.buildLink({
-      text: 'remove',
+      contents: 'remove',
+      className: 'alert button',
       handler: function() {
         listItem.remove();
       }
     });
     var promoteLink = this.buildLink({
-      text: 'promote',
+      contents: 'promote',
       handler: function() {
         this.promote(listItem);
       }.bind(this)
     });
     var moveUpLink = this.buildLink({
-      text: 'Up',
+      contents: '<i class="fa fa-arrow-up"></i>',
       className:'moveUp',
       handler: function() {
         this.moveUp(listItem);
       }.bind(this)
     });
     var moveDownLink = this.buildLink({
-      text: 'down',
+      contents: 'down',
       className: 'moveDown',
       handler: function() {
         this.moveDown(listItem);
       }.bind(this)
     });
     span.appendChild(this.buildLink({
-          text: 'edit',
-          className: 'edit',
-          handler: function() {
-            this.toggleEditable(listItem.querySelector('span.studentName'));
-          }.bind(this)
-        }));
-
-    listItem.appendChild(removeLink);
-    listItem.appendChild(promoteLink);
-    listItem.appendChild(moveUpLink);
-    listItem.appendChild(moveDownLink)
+      contents: 'edit',
+      className: 'edit',
+      handler: function() {
+        this.toggleEditable(listItem.querySelector('span.studentName'));
+      }.bind(this)
+    }));
+    span.appendChild(removeLink);
+    span.appendChild(promoteLink);
+    span.appendChild(moveUpLink);
+    span.appendChild(moveDownLink);
     listItem.appendChild(span);
   },
 
   buildLink: function(options) {
     var link = document.createElement('a');
     link.href = "#";
-    link.innerText = options.text;
+    link.innerHTML = options.contents;
     link.onclick = options.handler;
     link.className += (options.className || '');
     return link;
@@ -109,14 +109,16 @@ var megaRoster = {
   promote: function(listItem) {
     this.prependChild(this.studentList, listItem);
   },
+
   moveUp: function(listItem) {
      if (listItem !== this.studentList.firstElementChild) {
        var previousItem = listItem.previousElementSibling;
        this.studentList.insertBefore(listItem, previousItem);
      }
    },
+
   moveDown: function(listItem) {
-    if(listItem !== this.studentList.firstchild) {
+    if(listItem !== this.studentList.lastElementChild) {
       this.moveUp(listItem.nextElementSibling);
     }
   },
