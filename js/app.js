@@ -44,14 +44,14 @@ var megaRoster = {
     var span = document.createElement('span');
     span.className += 'actions'
     var removeLink = this.buildLink({
-      contents: '<i class="fa fa-ban" aria-hidden="true"></i>',
-      className: 'alert button',
+      contents: '<i class="fa fa-ban"></i>',
+      //className: 'alert button',
       handler: function() {
         listItem.remove();
       }
     });
     var promoteLink = this.buildLink({
-      contents: '<i class="fa fa-star" aria-hidden="true"></i>',
+      contents: '<i class="fa fa-star"></i>',
       handler: function() {
         this.promote(listItem);
       }.bind(this)
@@ -64,14 +64,14 @@ var megaRoster = {
       }.bind(this)
     });
     var moveDownLink = this.buildLink({
-      contents: '<i class="fa fa-arrow-down" aria-hidden="true"></i>',
+      contents: '<i class="fa fa-arrow-down"></i>',
       className: 'moveDown',
       handler: function() {
         this.moveDown(listItem);
       }.bind(this)
     });
     span.appendChild(this.buildLink({
-      contents: '<i class="fa fa-pencil" aria-hidden="true"></i>',
+      contents: '<i class="fa fa-pencil"></i>',
       className: 'edit',
       handler: function() {
         this.toggleEditable(listItem.querySelector('span.studentName'));
@@ -97,12 +97,12 @@ var megaRoster = {
     var toggleElement = el.parentElement.querySelector('a.edit');
     if (el.contentEditable === 'true') {
       el.contentEditable = 'false';
-      toggleElement.innerHTML = '<i class="fa fa-pencil" aria-hidden="true"></i>';
+      toggleElement.innerHTML = '<i class="fa fa-pencil"></i>';
     }
     else {
       el.contentEditable = 'true';
       el.focus();
-      toggleElement.innerHTML = '<i class="fa fa-floppy-o" aria-hidden="true"></i>';
+      toggleElement.innerHTML = '<i class="fa fa-floppy-o"></i>';
     }
   },
 
