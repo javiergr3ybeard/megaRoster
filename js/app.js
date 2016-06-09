@@ -1,5 +1,6 @@
 $(document).foundation()
 
+
 var megaRoster = {
   init: function(listSelector) {
     this.studentList = document.querySelector(listSelector);
